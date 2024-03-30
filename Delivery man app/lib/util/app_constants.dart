@@ -2,10 +2,10 @@ import 'package:stackfood_multivendor_driver/feature/language/domain/models/lang
 import 'package:stackfood_multivendor_driver/util/images.dart';
 
 class AppConstants {
-  static const String appName = 'StackFood Delivery';
+  static const String appName = 'Fodoq Delivery';
   static const double appVersion = 7.3;
 
-  static const String baseUrl = 'https://stackfood-admin.6amtech.com';
+  static const String baseUrl = 'https://app.fodoq.com';
   static const String configUri = '/api/v1/config';
   static const String forgerPasswordUri = '/api/v1/auth/delivery-man/forgot-password';
   static const String verifyTokenUri = '/api/v1/auth/delivery-man/verify-token';

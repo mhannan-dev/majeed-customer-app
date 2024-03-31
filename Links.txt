@@ -1,0 +1,2 @@
+admin panel url - http://app.fodoq.com/
+Fronent url - http://fodoq.com/

@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/interface/repository_interface.dart';
+import 'package:fodoq/interface/repository_interface.dart';
 
 abstract class CampaignRepositoryInterface implements RepositoryInterface {
   @override

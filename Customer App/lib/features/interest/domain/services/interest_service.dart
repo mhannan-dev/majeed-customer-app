@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/category/domain/models/category_model.dart';
-import 'package:stackfood_multivendor/features/interest/domain/repositories/interest_repository_interface.dart';
-import 'package:stackfood_multivendor/features/interest/domain/services/interest_service_interface.dart';
+import 'package:fodoq/features/category/domain/models/category_model.dart';
+import 'package:fodoq/features/interest/domain/repositories/interest_repository_interface.dart';
+import 'package:fodoq/features/interest/domain/services/interest_service_interface.dart';
 import 'package:flutter/material.dart';
 
 class InterestService implements InterestServiceInterface {
@@ -10,7 +10,7 @@ class InterestService implements InterestServiceInterface {
   @override
   List<bool>? processCategorySelectedList(List<CategoryModel>? categoryList) {
     List<bool>? interestCategorySelectedList;
-    if(categoryList != null) {
+    if (categoryList != null) {
       interestCategorySelectedList = [];
       for (var category in categoryList) {
         debugPrint(category.name);

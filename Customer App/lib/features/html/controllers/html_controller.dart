@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
-import 'package:stackfood_multivendor/features/html/domain/services/html_service_interface.dart';
-import 'package:stackfood_multivendor/features/html/enums/html_type.dart';
+import 'package:fodoq/features/language/controllers/localization_controller.dart';
+import 'package:fodoq/features/html/domain/services/html_service_interface.dart';
+import 'package:fodoq/features/html/enums/html_type.dart';
 import 'package:get/get.dart';
 
 class HtmlController extends GetxController implements GetxService {
@@ -12,8 +12,8 @@ class HtmlController extends GetxController implements GetxService {
   String? get htmlText => _htmlText;
 
   Future<void> getHtmlText(HtmlType htmlType) async {
-    _htmlText = await htmlServiceInterface.getHtmlText(htmlType, Get.find<LocalizationController>().locale.languageCode);
+    _htmlText = await htmlServiceInterface.getHtmlText(
+        htmlType, Get.find<LocalizationController>().locale.languageCode);
     update();
   }
-
 }

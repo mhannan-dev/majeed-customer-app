@@ -1,12 +1,12 @@
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/chat/domain/models/conversation_model.dart';
-import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
-import 'package:stackfood_multivendor/features/profile/domain/models/userinfo_model.dart';
-import 'package:stackfood_multivendor/features/profile/domain/services/profile_service_interface.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
+import 'package:fodoq/common/models/response_model.dart';
+import 'package:fodoq/features/cart/controllers/cart_controller.dart';
+import 'package:fodoq/features/auth/controllers/auth_controller.dart';
+import 'package:fodoq/features/chat/domain/models/conversation_model.dart';
+import 'package:fodoq/features/favourite/controllers/favourite_controller.dart';
+import 'package:fodoq/features/profile/domain/models/userinfo_model.dart';
+import 'package:fodoq/features/profile/domain/services/profile_service_interface.dart';
+import 'package:fodoq/helper/route_helper.dart';
+import 'package:fodoq/common/widgets/custom_snackbar_widget.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -35,12 +35,13 @@ class ProfileController extends GetxController implements GetxService {
     update();
   }
 
-
-  Future<ResponseModel> updateUserInfo(UserInfoModel updateUserModel, String token) async {
+  Future<ResponseModel> updateUserInfo(
+      UserInfoModel updateUserModel, String token) async {
     _isLoading = true;
     update();
-    ResponseModel responseModel = await profileServiceInterface.updateProfile(updateUserModel, _pickedFile, token);
-    if(responseModel.isSuccess){
+    ResponseModel responseModel = await profileServiceInterface.updateProfile(
+        updateUserModel, _pickedFile, token);
+    if (responseModel.isSuccess) {
       _userInfoModel = updateUserModel;
       _pickedFile = null;
       getUserInfo();
@@ -57,7 +58,8 @@ class ProfileController extends GetxController implements GetxService {
   Future<ResponseModel> changePassword(UserInfoModel updatedUserModel) async {
     _isLoading = true;
     update();
-    ResponseModel responseModel = await profileServiceInterface.changePassword(updatedUserModel);
+    ResponseModel responseModel =
+        await profileServiceInterface.changePassword(updatedUserModel);
     _isLoading = false;
     update();
     return responseModel;
@@ -88,6 +90,4 @@ class ProfileController extends GetxController implements GetxService {
     }
     update();
   }
-
-
 }

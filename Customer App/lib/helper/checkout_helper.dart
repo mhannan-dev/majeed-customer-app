@@ -1,12 +1,12 @@
-// import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-// import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-// import 'package:stackfood_multivendor/data/model/body/dateMonthBody.dart';
-// import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
-// import 'package:stackfood_multivendor/common/models/product_model.dart';
-// import 'package:stackfood_multivendor/features/location/domain/models/zone_response_model.dart';
-// import 'package:stackfood_multivendor/helper/address_helper.dart';
-// import 'package:stackfood_multivendor/helper/date_converter.dart';
-// import 'package:stackfood_multivendor/helper/price_converter.dart';
+// import 'package:fodoq/features/restaurant/controllers/restaurant_controller.dart';
+// import 'package:fodoq/features/splash/controllers/splash_controller.dart';
+// import 'package:fodoq/data/model/body/dateMonthBody.dart';
+// import 'package:fodoq/features/cart/domain/models/cart_model.dart';
+// import 'package:fodoq/common/models/product_model.dart';
+// import 'package:fodoq/features/location/domain/models/zone_response_model.dart';
+// import 'package:fodoq/helper/address_helper.dart';
+// import 'package:fodoq/helper/date_converter.dart';
+// import 'package:fodoq/helper/price_converter.dart';
 // import 'package:get/get.dart';
 //
 // class CheckoutHelper {

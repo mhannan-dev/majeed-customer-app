@@ -1,5 +1,3 @@
-import 'package:stackfood_multivendor/interface/repository_interface.dart';
+import 'package:fodoq/interface/repository_interface.dart';
 
-abstract class DashboardRepoInterface implements RepositoryInterface {
-
-}
+abstract class DashboardRepoInterface implements RepositoryInterface {}

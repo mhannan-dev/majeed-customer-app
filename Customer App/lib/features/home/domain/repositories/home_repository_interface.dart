@@ -1,4 +1,3 @@
-import 'package:stackfood_multivendor/interface/repository_interface.dart';
+import 'package:fodoq/interface/repository_interface.dart';
 
-abstract class HomeRepositoryInterface extends RepositoryInterface {
-}
+abstract class HomeRepositoryInterface extends RepositoryInterface {}

@@ -1,5 +1,5 @@
-import 'package:stackfood_multivendor/features/business/domain/models/business_plan_body.dart';
-import 'package:stackfood_multivendor/interface/repository_interface.dart';
+import 'package:fodoq/features/business/domain/models/business_plan_body.dart';
+import 'package:fodoq/interface/repository_interface.dart';
 import 'package:get/get_connect/connect.dart';
 
 abstract class BusinessRepoInterface<T> implements RepositoryInterface<T> {

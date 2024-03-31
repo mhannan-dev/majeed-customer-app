@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1049699819506:android:c80cf797b22c81f089956b",
         "android_client_info": {
-          "package_name": "com.fodoq.stack_food"
+          "package_name": "com.sixamtech.stack_food"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "1049699819506-2magqnhq5chvmvj75v287hngt3qb13rr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fodoq.stackFood"
+                "bundle_id": "com.sixamtech.stackFood"
               }
             }
           ]
@@ -45,7 +45,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1049699819506:android:490a8d64ef54403889956b",
         "android_client_info": {
-          "package_name": "com.fodoq.stack_food_delivery"
+          "package_name": "com.sixamtech.stack_food_delivery"
         }
       },
       "oauth_client": [
@@ -70,7 +70,7 @@
               "client_id": "1049699819506-2magqnhq5chvmvj75v287hngt3qb13rr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fodoq.stackFood"
+                "bundle_id": "com.sixamtech.stackFood"
               }
             }
           ]
@@ -81,7 +81,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1049699819506:android:0cf463b810ec5be589956b",
         "android_client_info": {
-          "package_name": "com.fodoq.stack_food_restaurant"
+          "package_name": "com.sixamtech.stack_food_restaurant"
         }
       },
       "oauth_client": [
@@ -106,7 +106,7 @@
               "client_id": "1049699819506-2magqnhq5chvmvj75v287hngt3qb13rr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fodoq.stackFood"
+                "bundle_id": "com.sixamtech.stackFood"
               }
             }
           ]

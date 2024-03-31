@@ -1,5 +1,5 @@
-import 'package:stackfood_multivendor_restaurant/api/api_client.dart';
-import 'package:stackfood_multivendor_restaurant/interface/repository_interface.dart';
+import 'package:fodoq_restaurant/api/api_client.dart';
+import 'package:fodoq_restaurant/interface/repository_interface.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class AuthRepositoryInterface implements RepositoryInterface {
@@ -15,5 +15,6 @@ abstract class AuthRepositoryInterface implements RepositoryInterface {
   String getUserToken();
   void setNotificationActive(bool isActive);
   Future<dynamic> toggleRestaurantClosedStatus();
-  Future<dynamic> registerRestaurant(Map<String, String> data, XFile? logo, XFile? cover, List<MultipartDocument> additionalDocument);
+  Future<dynamic> registerRestaurant(Map<String, String> data, XFile? logo,
+      XFile? cover, List<MultipartDocument> additionalDocument);
 }

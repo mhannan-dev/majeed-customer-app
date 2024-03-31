@@ -1,4 +1,4 @@
-package com.fodoq.stack_food_delivery
+package com.sixamtech.stack_food_delivery
 
 import android.app.Notification
 import android.app.NotificationChannel

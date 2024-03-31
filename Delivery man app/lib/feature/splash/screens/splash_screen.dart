@@ -71,7 +71,7 @@ class SplashScreenState extends State<SplashScreen> {
             Image.asset(Images.logo, width: 150),
             const SizedBox(height: Dimensions.paddingSizeLarge),
 
-            // Image.asset(Images.logoName, width: 150),
+            Image.asset(Images.logoName, width: 150),
             const SizedBox(height: Dimensions.paddingSizeSmall),
 
             Text('suffix_name'.tr, style: robotoMedium, textAlign: TextAlign.center),

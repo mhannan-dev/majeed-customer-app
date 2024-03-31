@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor_restaurant/util/dimensions.dart';
-import 'package:stackfood_multivendor_restaurant/util/images.dart';
-import 'package:stackfood_multivendor_restaurant/util/styles.dart';
+import 'package:fodoq_restaurant/util/dimensions.dart';
+import 'package:fodoq_restaurant/util/images.dart';
+import 'package:fodoq_restaurant/util/styles.dart';
 import 'package:flutter/material.dart';
 
 class CountWidget extends StatelessWidget {
@@ -12,23 +12,24 @@ class CountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
+        padding:
+            const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
         child: Column(children: [
-
-          Text(title, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).cardColor)),
+          Text(title,
+              style: robotoRegular.copyWith(
+                  fontSize: Dimensions.fontSizeExtraSmall,
+                  color: Theme.of(context).cardColor)),
           const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-
-            Image.asset(Images.order, color: Theme.of(context).cardColor, height: 12, width: 12),
+            Image.asset(Images.order,
+                color: Theme.of(context).cardColor, height: 12, width: 12),
             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-
-            Text(count.toString(), style: robotoMedium.copyWith(
-              fontSize: Dimensions.fontSizeExtraLarge, color: Theme.of(context).cardColor,
-            )),
-
+            Text(count.toString(),
+                style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeExtraLarge,
+                  color: Theme.of(context).cardColor,
+                )),
           ]),
-
         ]),
       ),
     );

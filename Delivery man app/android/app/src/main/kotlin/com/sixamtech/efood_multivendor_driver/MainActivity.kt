@@ -1,4 +1,4 @@
-package com.fodoq.stack_food_delivery
+package com.sixamtech.stack_food_delivery
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,7 +17,7 @@ class MainActivity : FlutterActivity() {
 
         val binaryMessenger = flutterEngine.dartExecutor.binaryMessenger
 
-        MethodChannel(binaryMessenger, "com.fodoq/background_service").apply {
+        MethodChannel(binaryMessenger, "com.sixamtech/background_service").apply {
             setMethodCallHandler { method, result ->
                 if (method.method == "startService") {
                     val callbackRawHandle = method.arguments as Long
@@ -34,7 +34,7 @@ class MainActivity : FlutterActivity() {
         }
 
 
-        MethodChannel(binaryMessenger, "com.fodoq/app_retain").apply {
+        MethodChannel(binaryMessenger, "com.sixamtech/app_retain").apply {
             setMethodCallHandler { method, result ->
                 if (method.method == "sendToBackground") {
                     moveTaskToBack(true)

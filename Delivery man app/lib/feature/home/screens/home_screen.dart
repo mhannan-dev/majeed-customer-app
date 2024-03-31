@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
           child: Image.asset(Images.logo, height: 30, width: 30),
         ),
         titleSpacing: 0, elevation: 0,
-        // title: Image.asset(Images.logoName, width: 120),
+        title: Image.asset(Images.logoName, width: 120),
         actions: [
 
           IconButton(

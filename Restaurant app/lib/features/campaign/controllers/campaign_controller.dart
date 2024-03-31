@@ -1,6 +1,6 @@
-import 'package:fodoq_restaurant/common/widgets/custom_snackbar_widget.dart';
-import 'package:fodoq_restaurant/features/campaign/domain/models/campaign_model.dart';
-import 'package:fodoq_restaurant/features/campaign/domain/services/campaign_service_interface.dart';
+import 'package:stackfood_multivendor_restaurant/common/widgets/custom_snackbar_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/campaign/domain/models/campaign_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/campaign/domain/services/campaign_service_interface.dart';
 import 'package:get/get.dart';
 
 class CampaignController extends GetxController implements GetxService {
@@ -15,10 +15,10 @@ class CampaignController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+
   Future<void> getCampaignList() async {
-    List<CampaignModel>? campaignList =
-        await campaignServiceInterface.getCampaignList();
-    if (campaignList != null) {
+    List<CampaignModel>? campaignList = await campaignServiceInterface.getCampaignList();
+    if(campaignList != null) {
       _campaignList = [];
       _allCampaignList = [];
       _campaignList!.addAll(campaignList);
@@ -28,8 +28,7 @@ class CampaignController extends GetxController implements GetxService {
   }
 
   void filterCampaign(String status) {
-    _campaignList =
-        campaignServiceInterface.filterCampaign(status, _allCampaignList);
+    _campaignList = campaignServiceInterface.filterCampaign(status, _allCampaignList);
     update();
   }
 
@@ -38,8 +37,8 @@ class CampaignController extends GetxController implements GetxService {
     update();
     bool isSuccess = await campaignServiceInterface.joinCampaign(campaignID);
     Get.back();
-    if (isSuccess) {
-      if (fromDetails) {
+    if(isSuccess) {
+      if(fromDetails) {
         Get.back();
       }
       showCustomSnackBar('successfully_joined'.tr, isError: false);
@@ -54,8 +53,8 @@ class CampaignController extends GetxController implements GetxService {
     update();
     bool isSuccess = await campaignServiceInterface.leaveCampaign(campaignID);
     Get.back();
-    if (isSuccess) {
-      if (fromDetails) {
+    if(isSuccess) {
+      if(fromDetails) {
         Get.back();
       }
       showCustomSnackBar('successfully_leave'.tr, isError: false);
@@ -64,4 +63,5 @@ class CampaignController extends GetxController implements GetxService {
     _isLoading = false;
     update();
   }
+
 }

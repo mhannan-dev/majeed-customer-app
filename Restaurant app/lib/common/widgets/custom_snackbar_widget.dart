@@ -1,4 +1,4 @@
-import 'package:fodoq_restaurant/util/dimensions.dart';
+import 'package:stackfood_multivendor_restaurant/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

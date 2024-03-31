@@ -1,4 +1,4 @@
-import 'package:fodoq_restaurant/util/app_constants.dart';
+import 'package:stackfood_multivendor_restaurant/util/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

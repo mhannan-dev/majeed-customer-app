@@ -1,7 +1,7 @@
-import 'package:fodoq_restaurant/common/models/response_model.dart';
-import 'package:fodoq_restaurant/features/coupon/domain/models/coupon_body_model.dart';
-import 'package:fodoq_restaurant/common/widgets/custom_snackbar_widget.dart';
-import 'package:fodoq_restaurant/features/coupon/domain/services/coupon_service_interface.dart';
+import 'package:stackfood_multivendor_restaurant/common/models/response_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/coupon/domain/models/coupon_body_model.dart';
+import 'package:stackfood_multivendor_restaurant/common/widgets/custom_snackbar_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/coupon/domain/services/coupon_service_interface.dart';
 import 'package:get/get.dart';
 
 class CouponController extends GetxController implements GetxService {
@@ -24,9 +24,8 @@ class CouponController extends GetxController implements GetxService {
   CouponBodyModel? get couponDetails => _couponDetails;
 
   Future<void> getCouponList() async {
-    List<CouponBodyModel>? couponList =
-        await couponServiceInterface.getCouponList(1);
-    if (couponList != null) {
+    List<CouponBodyModel>? couponList = await couponServiceInterface.getCouponList(1);
+    if(couponList != null) {
       _couponList = [];
       _couponList!.addAll(couponList);
     }
@@ -35,9 +34,8 @@ class CouponController extends GetxController implements GetxService {
 
   Future<CouponBodyModel?> getCouponDetails(int id) async {
     _couponDetails = null;
-    CouponBodyModel? couponDetails =
-        await couponServiceInterface.getCouponDetails(id);
-    if (couponDetails != null) {
+    CouponBodyModel? couponDetails = await couponServiceInterface.getCouponDetails(id);
+    if(couponDetails != null) {
       _couponDetails = couponDetails;
     }
     update();
@@ -45,8 +43,7 @@ class CouponController extends GetxController implements GetxService {
   }
 
   Future<bool> changeStatus(int? couponId, bool status) async {
-    bool isSuccess =
-        await couponServiceInterface.changeStatus(couponId, status ? 1 : 0);
+    bool isSuccess = await couponServiceInterface.changeStatus(couponId, status ? 1 : 0);
     return isSuccess;
   }
 
@@ -54,9 +51,8 @@ class CouponController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     bool success = false;
-    ResponseModel responseModel =
-        await couponServiceInterface.deleteCoupon(couponId);
-    if (responseModel.isSuccess) {
+    ResponseModel responseModel = await couponServiceInterface.deleteCoupon(couponId);
+    if(responseModel.isSuccess) {
       success = true;
       getCouponList();
       Get.back();
@@ -67,17 +63,8 @@ class CouponController extends GetxController implements GetxService {
     return success;
   }
 
-  Future<void> addCoupon(
-      {String? code,
-      String? title,
-      String? startDate,
-      String? expireDate,
-      required String discount,
-      String? couponType,
-      String? discountType,
-      String? limit,
-      String? maxDiscount,
-      String? minPurchase}) async {
+  Future<void> addCoupon({String? code, String? title, String? startDate, String? expireDate, required String discount, String? couponType,
+    String? discountType, String? limit, String? maxDiscount, String? minPurchase}) async {
     _isLoading = true;
     update();
 
@@ -95,7 +82,7 @@ class CouponController extends GetxController implements GetxService {
     };
 
     ResponseModel responseModel = await couponServiceInterface.addCoupon(data);
-    if (responseModel.isSuccess) {
+    if(responseModel.isSuccess) {
       getCouponList();
       Get.back();
       showCustomSnackBar(responseModel.message, isError: false);
@@ -104,18 +91,8 @@ class CouponController extends GetxController implements GetxService {
     update();
   }
 
-  Future<void> updateCoupon(
-      {String? couponId,
-      String? code,
-      String? title,
-      String? startDate,
-      String? expireDate,
-      required String discount,
-      String? couponType,
-      String? discountType,
-      String? limit,
-      String? maxDiscount,
-      String? minPurchase}) async {
+  Future<void> updateCoupon({String? couponId, String? code, String? title, String? startDate, String? expireDate, required String discount,
+    String? couponType, String? discountType, String? limit, String? maxDiscount, String? minPurchase}) async {
     _isLoading = true;
     update();
 
@@ -133,9 +110,8 @@ class CouponController extends GetxController implements GetxService {
       "min_purchase": minPurchase,
     };
 
-    ResponseModel responseModel =
-        await couponServiceInterface.updateCoupon(data);
-    if (responseModel.isSuccess) {
+    ResponseModel responseModel = await couponServiceInterface.updateCoupon(data);
+    if(responseModel.isSuccess) {
       Get.back();
       showCustomSnackBar(responseModel.message, isError: false);
       getCouponList();
@@ -146,15 +122,16 @@ class CouponController extends GetxController implements GetxService {
 
   void setCouponTypeIndex(int index, bool notify) {
     _couponTypeIndex = index;
-    if (notify) {
+    if(notify) {
       update();
     }
   }
 
   void setDiscountTypeIndex(int index, bool notify) {
     _discountTypeIndex = index;
-    if (notify) {
+    if(notify) {
       update();
     }
   }
+
 }

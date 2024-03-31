@@ -1,4 +1,4 @@
-import 'package:fodoq_restaurant/features/auth/domain/models/zone_response_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/auth/domain/models/zone_response_model.dart';
 
 class AddressModel {
   int? id;

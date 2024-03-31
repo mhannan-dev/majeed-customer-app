@@ -1,7 +1,7 @@
-import 'package:fodoq_restaurant/common/models/config_model.dart';
-import 'package:fodoq_restaurant/api/api_client.dart';
-import 'package:fodoq_restaurant/features/splash/domain/repositories/splash_repository_service.dart';
-import 'package:fodoq_restaurant/util/app_constants.dart';
+import 'package:stackfood_multivendor_restaurant/common/models/config_model.dart';
+import 'package:stackfood_multivendor_restaurant/api/api_client.dart';
+import 'package:stackfood_multivendor_restaurant/features/splash/domain/repositories/splash_repository_service.dart';
+import 'package:stackfood_multivendor_restaurant/util/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +14,7 @@ class SplashRepository implements SplashRepositoryInterface {
   Future<ConfigModel?> getConfigData() async {
     ConfigModel? configModel;
     Response response = await apiClient.getData(AppConstants.configUri);
-    if (response.statusCode == 200) {
+    if(response.statusCode == 200) {
       configModel = ConfigModel.fromJson(response.body);
     }
     return configModel;
@@ -22,24 +22,22 @@ class SplashRepository implements SplashRepositoryInterface {
 
   @override
   Future<bool> initSharedData() {
-    if (!sharedPreferences.containsKey(AppConstants.theme)) {
+    if(!sharedPreferences.containsKey(AppConstants.theme)) {
       return sharedPreferences.setBool(AppConstants.theme, false);
     }
-    if (!sharedPreferences.containsKey(AppConstants.countryCode)) {
-      return sharedPreferences.setString(
-          AppConstants.countryCode, AppConstants.languages[0].countryCode!);
+    if(!sharedPreferences.containsKey(AppConstants.countryCode)) {
+      return sharedPreferences.setString(AppConstants.countryCode, AppConstants.languages[0].countryCode!);
     }
-    if (!sharedPreferences.containsKey(AppConstants.languageCode)) {
-      return sharedPreferences.setString(
-          AppConstants.languageCode, AppConstants.languages[0].languageCode!);
+    if(!sharedPreferences.containsKey(AppConstants.languageCode)) {
+      return sharedPreferences.setString(AppConstants.languageCode, AppConstants.languages[0].languageCode!);
     }
-    if (!sharedPreferences.containsKey(AppConstants.notification)) {
+    if(!sharedPreferences.containsKey(AppConstants.notification)) {
       return sharedPreferences.setBool(AppConstants.notification, true);
     }
-    if (!sharedPreferences.containsKey(AppConstants.intro)) {
+    if(!sharedPreferences.containsKey(AppConstants.intro)) {
       return sharedPreferences.setBool(AppConstants.intro, true);
     }
-    if (!sharedPreferences.containsKey(AppConstants.intro)) {
+    if(!sharedPreferences.containsKey(AppConstants.intro)) {
       return sharedPreferences.setInt(AppConstants.notificationCount, 0);
     }
     return Future.value(true);
@@ -89,4 +87,5 @@ class SplashRepository implements SplashRepositoryInterface {
     // TODO: implement update
     throw UnimplementedError();
   }
+
 }

@@ -1,13 +1,13 @@
-import 'package:fodoq_restaurant/common/models/response_model.dart';
-import 'package:fodoq_restaurant/common/widgets/custom_snackbar_widget.dart';
-import 'package:fodoq_restaurant/features/auth/domain/services/forgot_password_service_interface.dart';
-import 'package:fodoq_restaurant/features/profile/domain/models/profile_model.dart';
+import 'package:stackfood_multivendor_restaurant/common/models/response_model.dart';
+import 'package:stackfood_multivendor_restaurant/common/widgets/custom_snackbar_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/auth/domain/services/forgot_password_service_interface.dart';
+import 'package:stackfood_multivendor_restaurant/features/profile/domain/models/profile_model.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordController extends GetxController implements GetxService {
   final ForgotPasswordServiceInterface forgotPasswordServiceInterface;
   ForgotPasswordController({required this.forgotPasswordServiceInterface});
-
+  
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -17,8 +17,7 @@ class ForgotPasswordController extends GetxController implements GetxService {
   Future<ResponseModel> forgotPassword(String? email) async {
     _isLoading = true;
     update();
-    ResponseModel responseModel =
-        await forgotPasswordServiceInterface.forgotPassword(email);
+    ResponseModel responseModel = await forgotPasswordServiceInterface.forgotPassword(email);
     _isLoading = false;
     update();
     return responseModel;
@@ -32,20 +31,17 @@ class ForgotPasswordController extends GetxController implements GetxService {
   Future<ResponseModel> verifyToken(String? email) async {
     _isLoading = true;
     update();
-    ResponseModel responseModel = await forgotPasswordServiceInterface
-        .verifyToken(email, _verificationCode);
+    ResponseModel responseModel = await forgotPasswordServiceInterface.verifyToken(email, _verificationCode);
     _isLoading = false;
     update();
     return responseModel;
   }
 
-  Future<bool> changePassword(
-      ProfileModel updatedUserModel, String password) async {
+  Future<bool> changePassword(ProfileModel updatedUserModel, String password) async {
     _isLoading = true;
     update();
     bool isSuccess;
-    bool success = await forgotPasswordServiceInterface.changePassword(
-        updatedUserModel, password);
+    bool success = await forgotPasswordServiceInterface.changePassword(updatedUserModel, password);
     _isLoading = false;
     if (success) {
       Get.back();
@@ -58,14 +54,13 @@ class ForgotPasswordController extends GetxController implements GetxService {
     return isSuccess;
   }
 
-  Future<ResponseModel> resetPassword(String? resetToken, String? email,
-      String password, String confirmPassword) async {
+  Future<ResponseModel> resetPassword(String? resetToken, String? email, String password, String confirmPassword) async {
     _isLoading = true;
     update();
-    ResponseModel responseModel = await forgotPasswordServiceInterface
-        .resetPassword(resetToken, email, password, confirmPassword);
+    ResponseModel responseModel = await forgotPasswordServiceInterface.resetPassword(resetToken, email, password, confirmPassword);
     _isLoading = false;
     update();
     return responseModel;
   }
+  
 }

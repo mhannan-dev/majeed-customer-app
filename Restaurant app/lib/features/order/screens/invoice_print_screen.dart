@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:fodoq_restaurant/features/order/domain/models/bluetooth_printer_model.dart';
-import 'package:fodoq_restaurant/features/order/domain/models/order_details_model.dart';
-import 'package:fodoq_restaurant/features/order/domain/models/order_model.dart';
-import 'package:fodoq_restaurant/features/order/widgets/invoice_dialog_widget.dart';
-import 'package:fodoq_restaurant/util/dimensions.dart';
-import 'package:fodoq_restaurant/util/styles.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/domain/models/bluetooth_printer_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/domain/models/order_details_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/domain/models/order_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/widgets/invoice_dialog_widget.dart';
+import 'package:stackfood_multivendor_restaurant/util/dimensions.dart';
+import 'package:stackfood_multivendor_restaurant/util/styles.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +17,14 @@ import 'package:image/image.dart' as i;
 class InVoicePrintScreen extends StatefulWidget {
   final OrderModel? order;
   final List<OrderDetailsModel>? orderDetails;
-  const InVoicePrintScreen(
-      {super.key, required this.order, required this.orderDetails});
+  const InVoicePrintScreen({super.key, required this.order, required this.orderDetails});
 
   @override
   State<InVoicePrintScreen> createState() => _InVoicePrintScreenState();
 }
 
 class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
+
   PrinterType _defaultPrinterType = PrinterType.bluetooth;
   final bool _isBle = GetPlatform.isIOS;
   final PrinterManager _printerManager = PrinterManager.instance;
@@ -50,18 +50,17 @@ class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
     _scan();
 
     /// subscription to listen change status of bluetooth connection
-    _subscriptionBtStatus =
-        PrinterManager.instance.stateBluetooth.listen((status) {
+    _subscriptionBtStatus = PrinterManager.instance.stateBluetooth.listen((status) {
       log(' ----------------- status bt $status ------------------ ');
       _currentStatus = status;
 
       if (status == BTStatus.connected && pendingTask != null) {
         Future.delayed(const Duration(milliseconds: 1000), () {
-          PrinterManager.instance
-              .send(type: PrinterType.bluetooth, bytes: pendingTask!);
+          PrinterManager.instance.send(type: PrinterType.bluetooth, bytes: pendingTask!);
           pendingTask = null;
         });
       }
+
     });
   }
 
@@ -77,9 +76,7 @@ class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
   /// method to scan devices according PrinterType
   void _scan() {
     _devices.clear();
-    _subscription = _printerManager
-        .discovery(type: _defaultPrinterType, isBle: _isBle)
-        .listen((device) {
+    _subscription = _printerManager.discovery(type: _defaultPrinterType, isBle: _isBle).listen((device) {
       _devices.add(BluetoothPrinterModel(
         deviceName: device.name,
         address: device.address,
@@ -119,11 +116,8 @@ class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
 
   void _selectDevice(BluetoothPrinterModel device) async {
     if (_selectedPrinter != null) {
-      if ((device.address != _selectedPrinter!.address) ||
-          (device.typePrinter == PrinterType.usb &&
-              _selectedPrinter!.vendorId != device.vendorId)) {
-        await PrinterManager.instance
-            .disconnect(type: _selectedPrinter!.typePrinter);
+      if ((device.address != _selectedPrinter!.address) || (device.typePrinter == PrinterType.usb && _selectedPrinter!.vendorId != device.vendorId)) {
+        await PrinterManager.instance.disconnect(type: _selectedPrinter!.typePrinter);
       }
     }
 
@@ -134,8 +128,7 @@ class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
   Future _printReceipt(i.Image image) async {
     i.Image resized = i.copyResize(image, width: _paper80MM ? 500 : 365);
     CapabilityProfile profile = await CapabilityProfile.load();
-    Generator generator =
-        Generator(_paper80MM ? PaperSize.mm80 : PaperSize.mm58, profile);
+    Generator generator = Generator(_paper80MM ? PaperSize.mm80 : PaperSize.mm58, profile);
     List<int> bytes = [];
     bytes += generator.image(resized);
     _printEscPos(bytes, generator);
@@ -183,13 +176,13 @@ class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
       default:
     }
     if (bluetoothPrinter.typePrinter == PrinterType.bluetooth) {
-      try {
+      try{
         if (kDebugMode) {
           print('------$_currentStatus');
         }
         _printerManager.send(type: bluetoothPrinter.typePrinter, bytes: bytes);
         pendingTask = null;
-      } catch (_) {}
+      }catch(_) {}
     } else {
       _printerManager.send(type: bluetoothPrinter.typePrinter, bytes: bytes);
     }
@@ -197,155 +190,139 @@ class _InVoicePrintScreenState extends State<InVoicePrintScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _searchingMode
-        ? SingleChildScrollView(
-            padding: const EdgeInsets.all(Dimensions.fontSizeLarge),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Text('paper_size'.tr, style: robotoMedium),
-              Row(children: [
-                Expanded(
-                    child: RadioListTile(
-                  title: Text('80_mm'.tr),
-                  groupValue: _paper80MM,
-                  dense: true,
-                  contentPadding: EdgeInsets.zero,
-                  value: true,
-                  onChanged: (bool? value) {
-                    _paper80MM = true;
-                    setState(() {});
-                  },
-                )),
-                Expanded(
-                    child: RadioListTile(
-                  title: Text('58_mm'.tr),
-                  groupValue: _paper80MM,
-                  contentPadding: EdgeInsets.zero,
-                  dense: true,
-                  value: false,
-                  onChanged: (bool? value) {
-                    _paper80MM = false;
-                    setState(() {});
-                  },
-                )),
-              ]),
-              const SizedBox(height: Dimensions.paddingSizeSmall),
-              ListView.builder(
-                itemCount: _devices.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: Dimensions.paddingSizeSmall),
-                    child: InkWell(
-                      onTap: () {
-                        _selectDevice(_devices[index]);
-                        setState(() {
-                          _searchingMode = false;
-                        });
-                      },
-                      child: Stack(children: [
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${_devices[index].deviceName}'),
-                              Platform.isAndroid &&
-                                      _defaultPrinterType == PrinterType.usb
-                                  ? const SizedBox()
-                                  : Visibility(
-                                      visible: !Platform.isWindows,
-                                      child: Text("${_devices[index].address}"),
-                                    ),
-                              index != _devices.length - 1
-                                  ? Divider(
-                                      color: Theme.of(context).disabledColor)
-                                  : const SizedBox(),
-                            ]),
-                        (_selectedPrinter != null &&
-                                ((_devices[index].typePrinter ==
-                                                PrinterType.usb &&
-                                            Platform.isWindows
-                                        ? _devices[index].deviceName ==
-                                            _selectedPrinter!.deviceName
-                                        : _devices[index].vendorId != null &&
-                                            _selectedPrinter!.vendorId ==
-                                                _devices[index].vendorId) ||
-                                    (_devices[index].address != null &&
-                                        _selectedPrinter!.address ==
-                                            _devices[index].address)))
-                            ? const Positioned(
-                                top: 5,
-                                right: 5,
-                                child: Icon(Icons.check, color: Colors.green),
-                              )
-                            : const SizedBox(),
-                      ]),
-                    ),
-                  );
+    return _searchingMode ? SingleChildScrollView(
+      padding: const EdgeInsets.all(Dimensions.fontSizeLarge),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+
+        Text('paper_size'.tr, style: robotoMedium),
+
+        Row(children: [
+
+          Expanded(child: RadioListTile(
+            title: Text('80_mm'.tr),
+            groupValue: _paper80MM,
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            value: true,
+            onChanged: (bool? value) {
+              _paper80MM = true;
+              setState(() {});
+            },
+          )),
+
+          Expanded(child: RadioListTile(
+            title: Text('58_mm'.tr),
+            groupValue: _paper80MM,
+            contentPadding: EdgeInsets.zero,
+            dense: true,
+            value: false,
+            onChanged: (bool? value) {
+              _paper80MM = false;
+              setState(() {});
+            },
+          )),
+
+        ]),
+        const SizedBox(height: Dimensions.paddingSizeSmall),
+
+        ListView.builder(
+          itemCount: _devices.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+              child: InkWell(
+                onTap: () {
+                  _selectDevice(_devices[index]);
+                  setState(() {
+                    _searchingMode = false;
+                  });
                 },
-              ),
-              Visibility(
-                visible: _defaultPrinterType == PrinterType.network &&
-                    Platform.isWindows,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: TextFormField(
-                    controller: _ipController,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(signed: true),
-                    decoration: InputDecoration(
-                      label: Text('ip_address'.tr),
-                      prefixIcon: const Icon(Icons.wifi, size: 24),
+                child: Stack(children: [
+
+                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+                    Text('${_devices[index].deviceName}'),
+
+                    Platform.isAndroid && _defaultPrinterType == PrinterType.usb ? const SizedBox() : Visibility(
+                      visible: !Platform.isWindows,
+                      child: Text("${_devices[index].address}"),
                     ),
-                    onChanged: _setIpAddress,
-                  ),
-                ),
+
+                    index != _devices.length-1 ? Divider(color: Theme.of(context).disabledColor) : const SizedBox(),
+
+                  ]),
+
+                  (_selectedPrinter != null && ((_devices[index].typePrinter == PrinterType.usb && Platform.isWindows
+                    ? _devices[index].deviceName == _selectedPrinter!.deviceName
+                    : _devices[index].vendorId != null && _selectedPrinter!.vendorId == _devices[index].vendorId) ||
+                    (_devices[index].address != null && _selectedPrinter!.address == _devices[index].address))) ? const Positioned(
+                      top: 5, right: 5,
+                      child: Icon(Icons.check, color: Colors.green),
+                  ) : const SizedBox(),
+
+                ]),
               ),
-              Visibility(
-                visible: _defaultPrinterType == PrinterType.network &&
-                    Platform.isWindows,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: TextFormField(
-                    controller: _portController,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(signed: true),
-                    decoration: InputDecoration(
-                      label: Text('port'.tr),
-                      prefixIcon: const Icon(Icons.numbers_outlined, size: 24),
-                    ),
-                    onChanged: _setPort,
-                  ),
-                ),
+            );
+          },
+        ),
+
+        Visibility(
+          visible: _defaultPrinterType == PrinterType.network && Platform.isWindows,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: TextFormField(
+              controller: _ipController,
+              keyboardType: const TextInputType.numberWithOptions(signed: true),
+              decoration: InputDecoration(
+                label: Text('ip_address'.tr),
+                prefixIcon: const Icon(Icons.wifi, size: 24),
               ),
-              Visibility(
-                visible: _defaultPrinterType == PrinterType.network &&
-                    Platform.isWindows,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      if (_ipController.text.isNotEmpty)
-                        _setIpAddress(_ipController.text);
-                      setState(() {
-                        _searchingMode = false;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 50),
-                      child:
-                          Text("print_ticket".tr, textAlign: TextAlign.center),
-                    ),
-                  ),
-                ),
+              onChanged: _setIpAddress,
+            ),
+          ),
+        ),
+
+        Visibility(
+          visible: _defaultPrinterType == PrinterType.network && Platform.isWindows,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: TextFormField(
+              controller: _portController,
+              keyboardType: const TextInputType.numberWithOptions(signed: true),
+              decoration: InputDecoration(
+                label: Text('port'.tr),
+                prefixIcon: const Icon(Icons.numbers_outlined, size: 24),
               ),
-            ]),
-          )
-        : InvoiceDialogWidget(
-            order: widget.order,
-            orderDetails: widget.orderDetails,
-            onPrint: (i.Image? image) => _printReceipt(image!),
-          );
+              onChanged: _setPort,
+            ),
+          ),
+        ),
+
+        Visibility(
+          visible: _defaultPrinterType == PrinterType.network && Platform.isWindows,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: OutlinedButton(
+              onPressed: () async {
+                if (_ipController.text.isNotEmpty) _setIpAddress(_ipController.text);
+                setState(() {
+                  _searchingMode = false;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 50),
+                child: Text("print_ticket".tr, textAlign: TextAlign.center),
+              ),
+            ),
+          ),
+        ),
+
+      ]),
+    ) : InvoiceDialogWidget(
+      order: widget.order, orderDetails: widget.orderDetails,
+      onPrint: (i.Image? image) => _printReceipt(image!),
+    );
   }
 }

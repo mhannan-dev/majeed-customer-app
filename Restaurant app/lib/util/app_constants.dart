@@ -1,11 +1,11 @@
-import 'package:fodoq_restaurant/features/language/domain/models/language_model.dart';
-import 'package:fodoq_restaurant/util/images.dart';
+import 'package:stackfood_multivendor_restaurant/features/language/domain/models/language_model.dart';
+import 'package:stackfood_multivendor_restaurant/util/images.dart';
 
 class AppConstants {
   static const String appName = 'Fodoq Restaurant';
   static const double appVersion = 7.3;
 
-  static const String baseUrl = 'http://app.fodoq.com';
+  static const String baseUrl = 'https://app.fodoq.com';
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/vendor/login';
   static const String forgetPasswordUri = '/api/v1/auth/vendor/forgot-password';

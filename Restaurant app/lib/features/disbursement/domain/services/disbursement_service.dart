@@ -1,10 +1,8 @@
-import 'package:fodoq_restaurant/common/models/response_model.dart';
-import 'package:fodoq_restaurant/features/disbursement/domain/repositories/disbursement_repository_interface.dart';
-import 'package:fodoq_restaurant/features/disbursement/domain/services/disbursement_service_interface.dart';
-import 'package:fodoq_restaurant/features/disbursement/domain/models/disbursement_method_model.dart'
-    as disburse;
-import 'package:fodoq_restaurant/features/disbursement/domain/models/disbursement_report_model.dart'
-    as report;
+import 'package:stackfood_multivendor_restaurant/common/models/response_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/disbursement/domain/repositories/disbursement_repository_interface.dart';
+import 'package:stackfood_multivendor_restaurant/features/disbursement/domain/services/disbursement_service_interface.dart';
+import 'package:stackfood_multivendor_restaurant/features/disbursement/domain/models/disbursement_method_model.dart' as disburse;
+import 'package:stackfood_multivendor_restaurant/features/disbursement/domain/models/disbursement_report_model.dart' as report;
 
 class DisbursementService implements DisbursementServiceInterface {
   final DisbursementRepositoryInterface disbursementRepositoryInterface;
@@ -31,8 +29,8 @@ class DisbursementService implements DisbursementServiceInterface {
   }
 
   @override
-  Future<report.DisbursementReportModel?> getDisbursementReport(
-      int offset) async {
+  Future<report.DisbursementReportModel?> getDisbursementReport(int offset) async {
     return await disbursementRepositoryInterface.getDisbursementReport(offset);
   }
+
 }

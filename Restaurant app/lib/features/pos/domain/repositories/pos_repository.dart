@@ -1,7 +1,7 @@
-import 'package:fodoq_restaurant/api/api_client.dart';
-import 'package:fodoq_restaurant/features/pos/domain/repositories/pos_repository_interface.dart';
-import 'package:fodoq_restaurant/features/restaurant/domain/models/product_model.dart';
-import 'package:fodoq_restaurant/util/app_constants.dart';
+import 'package:stackfood_multivendor_restaurant/api/api_client.dart';
+import 'package:stackfood_multivendor_restaurant/features/pos/domain/repositories/pos_repository_interface.dart';
+import 'package:stackfood_multivendor_restaurant/features/restaurant/domain/models/product_model.dart';
+import 'package:stackfood_multivendor_restaurant/util/app_constants.dart';
 import 'package:get/get.dart';
 
 class PosRepository implements PosRepositoryInterface {
@@ -11,20 +11,17 @@ class PosRepository implements PosRepositoryInterface {
   @override
   Future<List<Product>?> searchProductList(String searchText) async {
     List<Product>? searchProductList;
-    Response response = await apiClient
-        .postData(AppConstants.searchProductListUri, {'name': searchText});
+    Response response = await apiClient.postData(AppConstants.searchProductListUri, {'name': searchText});
     if (response.statusCode == 200) {
       searchProductList = [];
-      response.body
-          .forEach((food) => searchProductList!.add(Product.fromJson(food)));
+      response.body.forEach((food) => searchProductList!.add(Product.fromJson(food)));
     }
     return searchProductList;
   }
 
   @override
   Future<Response> searchCustomerList(String searchText) async {
-    return await apiClient
-        .getData('${AppConstants.searchCustomersUri}?search=$searchText');
+    return await apiClient.getData('${AppConstants.searchCustomersUri}?search=$searchText');
   }
 
   @override
@@ -66,4 +63,5 @@ class PosRepository implements PosRepositoryInterface {
     // TODO: implement update
     throw UnimplementedError();
   }
+  
 }

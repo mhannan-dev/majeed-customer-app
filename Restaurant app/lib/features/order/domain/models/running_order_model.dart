@@ -1,4 +1,4 @@
-import 'package:fodoq_restaurant/features/order/domain/models/order_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/domain/models/order_model.dart';
 
 class RunningOrderModel {
   String status;

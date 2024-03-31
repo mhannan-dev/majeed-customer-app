@@ -1,9 +1,9 @@
-import 'package:fodoq_restaurant/features/profile/domain/models/profile_model.dart';
-import 'package:fodoq_restaurant/features/restaurant/domain/models/cuisine_model.dart';
-import 'package:fodoq_restaurant/features/restaurant/domain/models/product_model.dart';
-import 'package:fodoq_restaurant/features/restaurant/domain/models/review_model.dart';
-import 'package:fodoq_restaurant/features/restaurant/domain/repositories/restaurant_repository_interface.dart';
-import 'package:fodoq_restaurant/features/restaurant/domain/services/restaurant_service_interface.dart';
+import 'package:stackfood_multivendor_restaurant/features/profile/domain/models/profile_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/restaurant/domain/models/cuisine_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/restaurant/domain/models/product_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/restaurant/domain/models/review_model.dart';
+import 'package:stackfood_multivendor_restaurant/features/restaurant/domain/repositories/restaurant_repository_interface.dart';
+import 'package:stackfood_multivendor_restaurant/features/restaurant/domain/services/restaurant_service_interface.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RestaurantService implements RestaurantServiceInterface {
@@ -21,22 +21,13 @@ class RestaurantService implements RestaurantServiceInterface {
   }
 
   @override
-  Future<bool> updateRestaurant(
-      Restaurant restaurant,
-      List<String> cuisines,
-      XFile? logo,
-      XFile? cover,
-      String token,
-      List<Translation> translation) async {
-    return await restaurantRepositoryInterface.updateRestaurant(
-        restaurant, cuisines, logo, cover, token, translation);
+  Future<bool> updateRestaurant(Restaurant restaurant, List<String> cuisines, XFile? logo, XFile? cover, String token, List<Translation> translation) async {
+    return await restaurantRepositoryInterface.updateRestaurant(restaurant, cuisines, logo, cover, token, translation);
   }
 
   @override
-  Future<bool> addProduct(
-      Product product, XFile? image, bool isAdd, String tags) async {
-    return await restaurantRepositoryInterface.addProduct(
-        product, image, isAdd, tags);
+  Future<bool> addProduct(Product product, XFile? image, bool isAdd, String tags) async {
+    return await restaurantRepositoryInterface.addProduct(product, image, isAdd, tags);
   }
 
   @override
@@ -46,8 +37,7 @@ class RestaurantService implements RestaurantServiceInterface {
 
   @override
   Future<List<ReviewModel>?> getRestaurantReviewList(int? restaurantID) async {
-    return await restaurantRepositoryInterface
-        .getRestaurantReviewList(restaurantID);
+    return await restaurantRepositoryInterface.getRestaurantReviewList(restaurantID);
   }
 
   @override
@@ -57,15 +47,12 @@ class RestaurantService implements RestaurantServiceInterface {
 
   @override
   Future<bool> updateProductStatus(int? productID, int status) async {
-    return await restaurantRepositoryInterface.updateProductStatus(
-        productID, status);
+    return await restaurantRepositoryInterface.updateProductStatus(productID, status);
   }
 
   @override
-  Future<bool> updateRecommendedProductStatus(
-      int? productID, int status) async {
-    return await restaurantRepositoryInterface.updateRecommendedProductStatus(
-        productID, status);
+  Future<bool> updateRecommendedProductStatus(int? productID, int status) async {
+    return await restaurantRepositoryInterface.updateRecommendedProductStatus(productID, status);
   }
 
   @override
@@ -85,7 +72,7 @@ class RestaurantService implements RestaurantServiceInterface {
 
   @override
   Future<bool> updateAnnouncement(int status, String announcement) async {
-    return await restaurantRepositoryInterface.updateAnnouncement(
-        status, announcement);
+    return await restaurantRepositoryInterface.updateAnnouncement(status, announcement);
   }
+
 }

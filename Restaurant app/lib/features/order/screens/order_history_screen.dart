@@ -1,10 +1,10 @@
-import 'package:fodoq_restaurant/common/widgets/custom_app_bar_widget.dart';
-import 'package:fodoq_restaurant/features/order/controllers/order_controller.dart';
-import 'package:fodoq_restaurant/features/home/widgets/order_button_widget.dart';
-import 'package:fodoq_restaurant/features/order/widgets/count_widget.dart';
-import 'package:fodoq_restaurant/features/order/widgets/order_view_widget.dart';
-import 'package:fodoq_restaurant/features/profile/controllers/profile_controller.dart';
-import 'package:fodoq_restaurant/util/dimensions.dart';
+import 'package:stackfood_multivendor_restaurant/common/widgets/custom_app_bar_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/controllers/order_controller.dart';
+import 'package:stackfood_multivendor_restaurant/features/home/widgets/order_button_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/widgets/count_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/order/widgets/order_view_widget.dart';
+import 'package:stackfood_multivendor_restaurant/features/profile/controllers/profile_controller.dart';
+import 'package:stackfood_multivendor_restaurant/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,46 +13,41 @@ class OrderHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Get.find<OrderController>().getPaginatedOrders(1, true);
 
     return Scaffold(
-      appBar: CustomAppBarWidget(
-          title: 'order_history'.tr, isBackButtonExist: false),
+
+      appBar: CustomAppBarWidget(title: 'order_history'.tr, isBackButtonExist: false),
+
       body: GetBuilder<OrderController>(builder: (orderController) {
         return Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
           child: Column(children: [
+
             GetBuilder<ProfileController>(builder: (profileController) {
-              return profileController.profileModel != null
-                  ? Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radiusSmall),
-                      ),
-                      child: Row(children: [
-                        CountWidget(
-                            title: 'today'.tr,
-                            count: profileController
-                                .profileModel!.todaysOrderCount),
-                        CountWidget(
-                            title: 'this_week'.tr,
-                            count: profileController
-                                .profileModel!.thisWeekOrderCount),
-                        CountWidget(
-                            title: 'this_month'.tr,
-                            count: profileController
-                                .profileModel!.thisMonthOrderCount),
-                      ]),
-                    )
-                  : const SizedBox();
+              return profileController.profileModel != null ? Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                ),
+                child: Row(children: [
+
+                  CountWidget(title: 'today'.tr, count: profileController.profileModel!.todaysOrderCount),
+
+                  CountWidget(title: 'this_week'.tr, count: profileController.profileModel!.thisWeekOrderCount),
+
+                  CountWidget(title: 'this_month'.tr, count: profileController.profileModel!.thisMonthOrderCount),
+
+                ]),
+              ) : const SizedBox();
             }),
             const SizedBox(height: Dimensions.paddingSizeLarge),
+
             Container(
               height: 40,
               decoration: BoxDecoration(
-                border: Border.all(
-                    color: Theme.of(context).disabledColor, width: 1),
+                border: Border.all(color: Theme.of(context).disabledColor, width: 1),
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               ),
               child: ListView.builder(
@@ -60,25 +55,18 @@ class OrderHistoryScreen extends StatelessWidget {
                 itemCount: orderController.statusList.length,
                 itemBuilder: (context, index) {
                   return OrderButtonWidget(
-                    title: orderController.statusList[index].tr,
-                    index: index,
-                    orderController: orderController,
-                    fromHistory: true,
+                    title: orderController.statusList[index].tr, index: index, orderController: orderController, fromHistory: true,
                   );
                 },
               ),
             ),
-            SizedBox(
-                height: orderController.historyOrderList != null
-                    ? Dimensions.paddingSizeSmall
-                    : 0),
+            SizedBox(height: orderController.historyOrderList != null ? Dimensions.paddingSizeSmall : 0),
+
             Expanded(
-              child: orderController.historyOrderList != null
-                  ? orderController.historyOrderList!.isNotEmpty
-                      ? const OrderViewWidget()
-                      : Center(child: Text('no_order_found'.tr))
-                  : const Center(child: CircularProgressIndicator()),
+              child: orderController.historyOrderList != null ? orderController.historyOrderList!.isNotEmpty
+                ? const OrderViewWidget() : Center(child: Text('no_order_found'.tr)) : const Center(child: CircularProgressIndicator()),
             ),
+
           ]),
         );
       }),

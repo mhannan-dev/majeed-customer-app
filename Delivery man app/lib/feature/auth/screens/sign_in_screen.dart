@@ -43,7 +43,7 @@ class SignInViewScreen extends StatelessWidget {
 
                   Image.asset(Images.logo, width: 100),
                   const SizedBox(height: Dimensions.paddingSizeSmall),
-                  Image.asset(Images.logoName, width: 100),
+                  // Image.asset(Images.logoName, width: 100),
                   const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
                   Text('sign_in'.tr.toUpperCase(), style: robotoBlack.copyWith(fontSize: 30)),

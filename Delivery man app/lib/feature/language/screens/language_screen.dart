@@ -37,7 +37,7 @@ class ChooseLanguageScreen extends StatelessWidget {
                     Center(child: Image.asset(Images.logo, width: 100)),
                     const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                    Center(child: Image.asset(Images.logoName, width: 100)),
+                    // Center(child: Image.asset(Images.logoName, width: 100)),
                     const SizedBox(height: 30),
 
                     Padding(

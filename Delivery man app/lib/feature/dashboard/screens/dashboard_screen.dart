@@ -29,13 +29,12 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class DashboardScreenState extends State<DashboardScreen> {
-
   DisbursementHelper disbursementHelper = DisbursementHelper();
 
   PageController? _pageController;
   int _pageIndex = 0;
   late List<Widget> _screens;
-  final _channel = const MethodChannel('com.sixamtech/app_retain');
+  final _channel = const MethodChannel('com.fodoq/app_retain');
   late StreamSubscription _stream;
 
   @override
@@ -56,22 +55,35 @@ class DashboardScreenState extends State<DashboardScreen> {
     showDisbursementWarningMessage();
 
     customPrint('dashboard call');
-      _stream = FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        customPrint("dashboard onMessage: ${message.data}/ ${message.data['type']}");
+    _stream = FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      customPrint(
+          "dashboard onMessage: ${message.data}/ ${message.data['type']}");
       String? type = message.notification!.bodyLocKey;
       String? orderID = message.notification!.titleLocKey;
-      if(type != 'assign' && type != 'new_order' && type != 'message' && type != 'order_request'&& type != 'order_status') {
-        NotificationHelper.showNotification(message, flutterLocalNotificationsPlugin);
+      if (type != 'assign' &&
+          type != 'new_order' &&
+          type != 'message' &&
+          type != 'order_request' &&
+          type != 'order_status') {
+        NotificationHelper.showNotification(
+            message, flutterLocalNotificationsPlugin);
       }
-      if(type == 'new_order' || type == 'order_request') {
+      if (type == 'new_order' || type == 'order_request') {
         Get.find<OrderController>().getCurrentOrders();
         Get.find<OrderController>().getLatestOrders();
-        Get.dialog(NewRequestDialogWidget(isRequest: true, onTap: () => _navigateRequestPage(), orderId: int.parse(orderID!)));
-      }else if(type == 'assign' && orderID != null && orderID.isNotEmpty) {
+        Get.dialog(NewRequestDialogWidget(
+            isRequest: true,
+            onTap: () => _navigateRequestPage(),
+            orderId: int.parse(orderID!)));
+      } else if (type == 'assign' && orderID != null && orderID.isNotEmpty) {
         Get.find<OrderController>().getCurrentOrders();
         Get.find<OrderController>().getLatestOrders();
-        Get.dialog(NewRequestDialogWidget(isRequest: false, onTap: () => Get.toNamed(RouteHelper.getOrderDetailsRoute(int.parse(orderID))), orderId: int.parse(orderID)));
-      }else if(type == 'block') {
+        Get.dialog(NewRequestDialogWidget(
+            isRequest: false,
+            onTap: () => Get.toNamed(
+                RouteHelper.getOrderDetailsRoute(int.parse(orderID))),
+            orderId: int.parse(orderID)));
+      } else if (type == 'block') {
         Get.find<AuthController>().clearSharedData();
         Get.find<ProfileController>().stopLocationRecord();
         Get.offAllNamed(RouteHelper.getSignInRoute());
@@ -80,13 +92,18 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _navigateRequestPage() {
-    if(Get.find<ProfileController>().profileModel != null && Get.find<ProfileController>().profileModel!.active == 1
-        && Get.find<OrderController>().currentOrderList != null && Get.find<OrderController>().currentOrderList!.isEmpty) {
+    if (Get.find<ProfileController>().profileModel != null &&
+        Get.find<ProfileController>().profileModel!.active == 1 &&
+        Get.find<OrderController>().currentOrderList != null &&
+        Get.find<OrderController>().currentOrderList!.isEmpty) {
       _setPage(1);
-    }else {
-      if(Get.find<ProfileController>().profileModel == null || Get.find<ProfileController>().profileModel!.active == 0) {
-        Get.dialog(CustomAlertDialogWidget(description: 'you_are_offline_now'.tr, onOkPressed: () => Get.back()));
-      }else {
+    } else {
+      if (Get.find<ProfileController>().profileModel == null ||
+          Get.find<ProfileController>().profileModel!.active == 0) {
+        Get.dialog(CustomAlertDialogWidget(
+            description: 'you_are_offline_now'.tr,
+            onOkPressed: () => Get.back()));
+      } else {
         _setPage(1);
       }
     }
@@ -108,10 +125,11 @@ class DashboardScreenState extends State<DashboardScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-        if(_pageIndex != 0) {
+        if (_pageIndex != 0) {
           _setPage(0);
-        }else {
-          if (GetPlatform.isAndroid && Get.find<ProfileController>().profileModel!.active == 1) {
+        } else {
+          if (GetPlatform.isAndroid &&
+              Get.find<ProfileController>().profileModel!.active == 1) {
             _channel.invokeMethod('sendToBackground');
           } else {
             return;
@@ -119,29 +137,37 @@ class DashboardScreenState extends State<DashboardScreen> {
         }
       },
       child: Scaffold(
-
-        bottomNavigationBar: GetPlatform.isDesktop ? const SizedBox() : BottomAppBar(
-          elevation: 5,
-          notchMargin: 5,
-          shape: const CircularNotchedRectangle(),
-          child: Padding(
-            padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-            child: Row(children: [
-
-              BottomNavItemWidget(iconData: Icons.home, isSelected: _pageIndex == 0, onTap: () => _setPage(0)),
-
-              BottomNavItemWidget(iconData: Icons.list_alt_rounded, isSelected: _pageIndex == 1, onTap: () {
-                _navigateRequestPage();
-              }),
-
-              BottomNavItemWidget(iconData: Icons.shopping_bag, isSelected: _pageIndex == 2, onTap: () => _setPage(2)),
-
-              BottomNavItemWidget(iconData: Icons.person, isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
-
-            ]),
-          ),
-        ),
-
+        bottomNavigationBar: GetPlatform.isDesktop
+            ? const SizedBox()
+            : BottomAppBar(
+                elevation: 5,
+                notchMargin: 5,
+                shape: const CircularNotchedRectangle(),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                  child: Row(children: [
+                    BottomNavItemWidget(
+                        iconData: Icons.home,
+                        isSelected: _pageIndex == 0,
+                        onTap: () => _setPage(0)),
+                    BottomNavItemWidget(
+                        iconData: Icons.list_alt_rounded,
+                        isSelected: _pageIndex == 1,
+                        onTap: () {
+                          _navigateRequestPage();
+                        }),
+                    BottomNavItemWidget(
+                        iconData: Icons.shopping_bag,
+                        isSelected: _pageIndex == 2,
+                        onTap: () => _setPage(2)),
+                    BottomNavItemWidget(
+                        iconData: Icons.person,
+                        isSelected: _pageIndex == 3,
+                        onTap: () => _setPage(3)),
+                  ]),
+                ),
+              ),
         body: PageView.builder(
           controller: _pageController,
           itemCount: _screens.length,

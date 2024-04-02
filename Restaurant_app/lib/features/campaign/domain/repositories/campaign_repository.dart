@@ -1,7 +1,7 @@
-import 'package:stackfood_multivendor_restaurant/api/api_client.dart';
-import 'package:stackfood_multivendor_restaurant/features/campaign/domain/models/campaign_model.dart';
-import 'package:stackfood_multivendor_restaurant/features/campaign/domain/repositories/campaign_repository_interface.dart';
-import 'package:stackfood_multivendor_restaurant/util/app_constants.dart';
+import 'package:fodoq_restaurant/api/api_client.dart';
+import 'package:fodoq_restaurant/features/campaign/domain/models/campaign_model.dart';
+import 'package:fodoq_restaurant/features/campaign/domain/repositories/campaign_repository_interface.dart';
+import 'package:fodoq_restaurant/util/app_constants.dart';
 import 'package:get/get.dart';
 
 class CampaignRepository implements CampaignRepositoryInterface {
@@ -23,13 +23,15 @@ class CampaignRepository implements CampaignRepositoryInterface {
 
   @override
   Future<bool> joinCampaign(int? campaignID) async {
-    Response response = await apiClient.putData(AppConstants.joinCampaignUri, {'campaign_id': campaignID});
+    Response response = await apiClient
+        .putData(AppConstants.joinCampaignUri, {'campaign_id': campaignID});
     return (response.statusCode == 200);
   }
 
   @override
   Future<bool> leaveCampaign(int? campaignID) async {
-    Response response = await apiClient.putData(AppConstants.leaveCampaignUri, {'campaign_id': campaignID});
+    Response response = await apiClient
+        .putData(AppConstants.leaveCampaignUri, {'campaign_id': campaignID});
     return (response.statusCode == 200);
   }
 
@@ -56,5 +58,4 @@ class CampaignRepository implements CampaignRepositoryInterface {
     // TODO: implement update
     throw UnimplementedError();
   }
-
 }

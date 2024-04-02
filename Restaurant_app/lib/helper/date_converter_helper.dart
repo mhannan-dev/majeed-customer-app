@@ -1,9 +1,8 @@
-import 'package:stackfood_multivendor_restaurant/features/splash/controllers/splash_controller.dart';
+import 'package:fodoq_restaurant/features/splash/controllers/splash_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
 class DateConverter {
-
   static String formatDate(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').format(dateTime);
   }
@@ -25,16 +24,19 @@ class DateConverter {
   }
 
   static String dateTimeStringToDateTime(String dateTime) {
-    return DateFormat('dd MMM yyyy  ${_timeFormatter()}').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+    return DateFormat('dd MMM yyyy  ${_timeFormatter()}')
+        .format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
   }
 
   static String dateTimeStringToDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+    return DateFormat('dd MMM yyyy')
+        .format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
   }
 
   static String dateTimeStringForDisbursement(String time) {
-    var newTime = '${time.substring(0,10)} ${time.substring(11,23)}';
-    return DateFormat('dd MMM, yyyy').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(newTime));
+    var newTime = '${time.substring(0, 10)} ${time.substring(11, 23)}';
+    return DateFormat('dd MMM, yyyy')
+        .format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(newTime));
 
     // return DateFormat('${_timeFormatter()} | d-MMM-yyyy ').format(dateTime.toLocal());
   }
@@ -64,32 +66,46 @@ class DateConverter {
   }
 
   static String convertDateToDate(String date) {
-    return DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd').parse(date));
+    return DateFormat('dd MMM yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(date));
   }
 
   static String dateTimeStringToMonthAndTime(String dateTime) {
-    return DateFormat('dd MMM yyyy HH:mm').format(dateTimeStringToDate(dateTime));
+    return DateFormat('dd MMM yyyy HH:mm')
+        .format(dateTimeStringToDate(dateTime));
   }
 
   static String dateTimeForCoupon(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 
-  static bool isAvailable(String? start, String? end, {DateTime? time, bool isoTime = false}) {
+  static bool isAvailable(String? start, String? end,
+      {DateTime? time, bool isoTime = false}) {
     DateTime currentTime;
-    if(time != null) {
+    if (time != null) {
       currentTime = time;
-    }else {
+    } else {
       currentTime = Get.find<SplashController>().currentTime;
     }
-    DateTime start0 = start != null ? isoTime ? isoStringToLocalDate(start) : DateFormat('HH:mm').parse(start) : DateTime(currentTime.year);
-    DateTime end0 = end != null ? isoTime ? isoStringToLocalDate(end) : DateFormat('HH:mm').parse(end) : DateTime(currentTime.year, currentTime.month, currentTime.day, 23, 59);
-    DateTime startTime = DateTime(currentTime.year, currentTime.month, currentTime.day, start0.hour, start0.minute, start0.second);
-    DateTime endTime = DateTime(currentTime.year, currentTime.month, currentTime.day, end0.hour, end0.minute, end0.second);
-    if(endTime.isBefore(startTime)) {
-      if(currentTime.isBefore(startTime) && currentTime.isBefore(endTime)){
+    DateTime start0 = start != null
+        ? isoTime
+            ? isoStringToLocalDate(start)
+            : DateFormat('HH:mm').parse(start)
+        : DateTime(currentTime.year);
+    DateTime end0 = end != null
+        ? isoTime
+            ? isoStringToLocalDate(end)
+            : DateFormat('HH:mm').parse(end)
+        : DateTime(
+            currentTime.year, currentTime.month, currentTime.day, 23, 59);
+    DateTime startTime = DateTime(currentTime.year, currentTime.month,
+        currentTime.day, start0.hour, start0.minute, start0.second);
+    DateTime endTime = DateTime(currentTime.year, currentTime.month,
+        currentTime.day, end0.hour, end0.minute, end0.second);
+    if (endTime.isBefore(startTime)) {
+      if (currentTime.isBefore(startTime) && currentTime.isBefore(endTime)) {
         startTime = startTime.add(const Duration(days: -1));
-      }else {
+      } else {
         endTime = endTime.add(const Duration(days: 1));
       }
     }
@@ -97,23 +113,29 @@ class DateConverter {
   }
 
   static String _timeFormatter() {
-    return Get.find<SplashController>().configModel!.timeformat == '24' ? 'HH:mm' : 'hh:mm a';
+    return Get.find<SplashController>().configModel!.timeformat == '24'
+        ? 'HH:mm'
+        : 'hh:mm a';
   }
 
-  static int differenceInMinute(String? deliveryTime, String? orderTime, int? processingTime, String? scheduleAt) {
+  static int differenceInMinute(String? deliveryTime, String? orderTime,
+      int? processingTime, String? scheduleAt) {
     int minTime = processingTime ?? 0;
-    if(deliveryTime != null && deliveryTime.isNotEmpty && processingTime == null) {
+    if (deliveryTime != null &&
+        deliveryTime.isNotEmpty &&
+        processingTime == null) {
       try {
         List<String> timeList = deliveryTime.split('-');
         minTime = int.parse(timeList[0]);
-      }catch(_) {}
+      } catch (_) {}
     }
-    DateTime deliveryTime0 = dateTimeStringToDate(scheduleAt ?? orderTime!).add(Duration(minutes: minTime));
+    DateTime deliveryTime0 = dateTimeStringToDate(scheduleAt ?? orderTime!)
+        .add(Duration(minutes: minTime));
     return deliveryTime0.difference(DateTime.now()).inMinutes;
   }
 
   static bool isBeforeTime(String? dateTime) {
-    if(dateTime == null) {
+    if (dateTime == null) {
       return false;
     }
     DateTime scheduleTime = dateTimeStringToDate(dateTime);
@@ -128,5 +150,4 @@ class DateConverter {
     int day = dateTime.difference(DateTime.now()).inDays;
     return day;
   }
-
 }

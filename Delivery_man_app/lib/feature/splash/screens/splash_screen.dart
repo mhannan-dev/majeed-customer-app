@@ -1,16 +1,17 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stackfood_multivendor_driver/feature/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor_driver/feature/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor_driver/feature/notification/domain/models/notification_body_model.dart';
 import 'package:stackfood_multivendor_driver/feature/profile/controllers/profile_controller.dart';
+import 'package:stackfood_multivendor_driver/feature/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor_driver/helper/route_helper.dart';
 import 'package:stackfood_multivendor_driver/util/app_constants.dart';
 import 'package:stackfood_multivendor_driver/util/dimensions.dart';
 import 'package:stackfood_multivendor_driver/util/images.dart';
 import 'package:stackfood_multivendor_driver/util/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   final NotificationBodyModel? body;
@@ -20,7 +21,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
   late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
 
@@ -29,10 +29,15 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     bool firstTime = true;
-    _onConnectivityChanged = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if(!firstTime) {
-        bool isNotConnected = result != ConnectivityResult.wifi && result != ConnectivityResult.mobile;
-        isNotConnected ? const SizedBox() : ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    _onConnectivityChanged = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (!firstTime) {
+        bool isNotConnected = result != ConnectivityResult.wifi &&
+            result != ConnectivityResult.mobile;
+        isNotConnected
+            ? const SizedBox()
+            : ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),
@@ -41,7 +46,7 @@ class SplashScreenState extends State<SplashScreen> {
             textAlign: TextAlign.center,
           ),
         ));
-        if(!isNotConnected) {
+        if (!isNotConnected) {
           _route();
         }
       }
@@ -67,15 +72,14 @@ class SplashScreenState extends State<SplashScreen> {
         child: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeLarge),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-
             Image.asset(Images.logo, width: 150),
             const SizedBox(height: Dimensions.paddingSizeLarge),
 
-            Image.asset(Images.logoName, width: 150),
+            // Image.asset(Images.logoName, width: 150),
             const SizedBox(height: Dimensions.paddingSizeSmall),
 
-            Text('suffix_name'.tr, style: robotoMedium, textAlign: TextAlign.center),
-
+            Text('suffix_name'.tr,
+                style: robotoMedium, textAlign: TextAlign.center),
           ]),
         ),
       ),
@@ -84,34 +88,45 @@ class SplashScreenState extends State<SplashScreen> {
 
   void _route() {
     Get.find<SplashController>().getConfigData().then((isSuccess) {
-      if(isSuccess) {
+      if (isSuccess) {
         Timer(const Duration(seconds: 1), () async {
           double? minimumVersion = 0;
-          if(GetPlatform.isAndroid) {
-            minimumVersion = Get.find<SplashController>().configModel!.appMinimumVersionAndroid;
+          if (GetPlatform.isAndroid) {
+            minimumVersion = Get.find<SplashController>()
+                .configModel!
+                .appMinimumVersionAndroid;
           }
-          if(AppConstants.appVersion < minimumVersion! || Get.find<SplashController>().configModel!.maintenanceMode!) {
-            Get.offNamed(RouteHelper.getUpdateRoute(AppConstants.appVersion < minimumVersion));
-          }else {
-            if(widget.body != null) {
+          if (AppConstants.appVersion < minimumVersion! ||
+              Get.find<SplashController>().configModel!.maintenanceMode!) {
+            Get.offNamed(RouteHelper.getUpdateRoute(
+                AppConstants.appVersion < minimumVersion));
+          } else {
+            if (widget.body != null) {
               if (widget.body!.notificationType == NotificationType.order) {
-                Get.offNamed(RouteHelper.getOrderDetailsRoute(widget.body!.orderId));
-              }else if(widget.body!.notificationType == NotificationType.order_request){
+                Get.offNamed(
+                    RouteHelper.getOrderDetailsRoute(widget.body!.orderId));
+              } else if (widget.body!.notificationType ==
+                  NotificationType.order_request) {
                 Get.toNamed(RouteHelper.getMainRoute('order-request'));
-              }else if(widget.body!.notificationType == NotificationType.general){
-                Get.toNamed(RouteHelper.getNotificationRoute(fromNotification: true));
+              } else if (widget.body!.notificationType ==
+                  NotificationType.general) {
+                Get.toNamed(
+                    RouteHelper.getNotificationRoute(fromNotification: true));
               } else {
-                Get.toNamed(RouteHelper.getChatRoute(notificationBody: widget.body, conversationId: widget.body!.conversationId));
+                Get.toNamed(RouteHelper.getChatRoute(
+                    notificationBody: widget.body,
+                    conversationId: widget.body!.conversationId));
               }
-            }else{
+            } else {
               if (Get.find<AuthController>().isLoggedIn()) {
                 Get.find<AuthController>().updateToken();
                 await Get.find<ProfileController>().getProfile();
                 Get.offNamed(RouteHelper.getInitialRoute());
               } else {
-                if(AppConstants.languages.length > 1 && Get.find<SplashController>().showLanguageIntro()){
+                if (AppConstants.languages.length > 1 &&
+                    Get.find<SplashController>().showLanguageIntro()) {
                   Get.offNamed(RouteHelper.getLanguageRoute('splash'));
-                }else{
+                } else {
                   Get.offNamed(RouteHelper.getSignInRoute());
                 }
               }
@@ -121,5 +136,4 @@ class SplashScreenState extends State<SplashScreen> {
       }
     });
   }
-
 }

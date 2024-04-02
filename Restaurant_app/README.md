@@ -1,4 +1,4 @@
-# stackfood_multivendor_restaurant
+# fodoq_restaurant
 
 A new Flutter application.
 

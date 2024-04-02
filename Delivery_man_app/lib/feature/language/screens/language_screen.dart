@@ -19,72 +19,83 @@ class ChooseLanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: fromProfile ? CustomAppBarWidget(title: 'language'.tr) : null,
-
       body: SafeArea(
-        child: GetBuilder<LocalizationController>(builder: (localizationController) {
+        child: GetBuilder<LocalizationController>(
+            builder: (localizationController) {
           return Column(children: [
-
-            Expanded(child: Center(
+            Expanded(
+                child: Center(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                child: Center(child: SizedBox(
+                child: Center(
+                    child: SizedBox(
                   width: 1170,
-                  child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(child: Image.asset(Images.logo, width: 100)),
+                        const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                    Center(child: Image.asset(Images.logo, width: 100)),
-                    const SizedBox(height: Dimensions.paddingSizeSmall),
+                        // Center(child: Image.asset(Images.logoName, width: 100)),
+                        const SizedBox(height: 30),
 
-                    Center(child: Image.asset(Images.logoName, width: 100)),
-                    const SizedBox(height: 30),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
-                      child: Text('select_language'.tr, style: robotoMedium),
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                    Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: (1/1),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: Dimensions.paddingSizeExtraSmall),
+                          child:
+                              Text('select_language'.tr, style: robotoMedium),
                         ),
-                        itemCount: localizationController.languages.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => LanguageWidget(
-                          languageModel: localizationController.languages[index],
-                          localizationController: localizationController, index: index,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                        const SizedBox(
+                            height: Dimensions.paddingSizeExtraSmall),
 
-                  ]),
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: (1 / 1),
+                            ),
+                            itemCount: localizationController.languages.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => LanguageWidget(
+                              languageModel:
+                                  localizationController.languages[index],
+                              localizationController: localizationController,
+                              index: index,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: Dimensions.paddingSizeLarge),
+                      ]),
                 )),
               ),
             )),
-
             Column(children: [
-
               Center(
-                child: Text('you_can_change_language'.tr, style: robotoRegular.copyWith(
-                  fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor,
-                )),
+                child: Text('you_can_change_language'.tr,
+                    style: robotoRegular.copyWith(
+                      fontSize: Dimensions.fontSizeSmall,
+                      color: Theme.of(context).disabledColor,
+                    )),
               ),
-
               CustomButtonWidget(
                 buttonText: 'save'.tr,
                 margin: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                 onPressed: () {
-                  if(localizationController.languages.isNotEmpty && localizationController.selectedIndex != -1) {
+                  if (localizationController.languages.isNotEmpty &&
+                      localizationController.selectedIndex != -1) {
                     localizationController.setLanguage(Locale(
-                      AppConstants.languages[localizationController.selectedIndex].languageCode!,
-                      AppConstants.languages[localizationController.selectedIndex].countryCode,
+                      AppConstants
+                          .languages[localizationController.selectedIndex]
+                          .languageCode!,
+                      AppConstants
+                          .languages[localizationController.selectedIndex]
+                          .countryCode,
                     ));
                     if (fromProfile) {
                       Navigator.pop(context);
@@ -92,14 +103,12 @@ class ChooseLanguageScreen extends StatelessWidget {
                       Get.find<SplashController>().setLanguageIntro(false);
                       Get.offNamed(RouteHelper.getSignInRoute());
                     }
-                  }else {
+                  } else {
                     showCustomSnackBar('select_a_language'.tr);
                   }
                 },
               ),
-
             ]),
-
           ]);
         }),
       ),

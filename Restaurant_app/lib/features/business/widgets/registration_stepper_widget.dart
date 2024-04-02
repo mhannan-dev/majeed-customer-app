@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor_restaurant/features/business/widgets/registration_stepper.dart';
+import 'package:fodoq_restaurant/features/business/widgets/registration_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,31 +8,41 @@ class RegistrationStepperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     int state = 0;
 
-    if(status == 'business') {
+    if (status == 'business') {
       state = 1;
-    }else if(status == 'payment') {
+    } else if (status == 'payment') {
       state = 2;
-    }else if(status == 'complete') {
+    } else if (status == 'complete') {
       state = 3;
     }
 
     return Row(children: [
-
       RegistrationStepper(
-        title: 'general_information'.tr, isActive: true, haveLeftBar: false, haveRightBar: true, rightActive: true, onGoing: state == 0,
+        title: 'general_information'.tr,
+        isActive: true,
+        haveLeftBar: false,
+        haveRightBar: true,
+        rightActive: true,
+        onGoing: state == 0,
       ),
-
       RegistrationStepper(
-        title: 'business_plan'.tr, isActive: state > 1, haveLeftBar: true, haveRightBar: true, rightActive: state > 1, onGoing: state == 1, processing: state != 3 && state != 0,
+        title: 'business_plan'.tr,
+        isActive: state > 1,
+        haveLeftBar: true,
+        haveRightBar: true,
+        rightActive: state > 1,
+        onGoing: state == 1,
+        processing: state != 3 && state != 0,
       ),
-
       RegistrationStepper(
-        title: 'complete'.tr, isActive: state == 3, haveLeftBar: true, haveRightBar: false, rightActive: state == 3,
+        title: 'complete'.tr,
+        isActive: state == 3,
+        haveLeftBar: true,
+        haveRightBar: false,
+        rightActive: state == 3,
       ),
-
     ]);
   }
 }

@@ -29,7 +29,7 @@
 
     <application
         tools:replace="android:label"
-        android:label="StackFood Delivery"
+        android:label="Fodoq Delivery"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
